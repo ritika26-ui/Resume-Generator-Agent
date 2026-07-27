@@ -92,7 +92,7 @@ final_prompt = prompt + prompt_reader()
 
 user_info = st.text_input("Give Your Information : ")
 user_photo = st.sidebar.file_uploader("Upload Pic", type='image/jpeg')
-user_query = """Give Resume for Python Developer.
+user_query = f"""Give Resume for Python Developer.
     user details : {user_info}
     use user profile image from given {user_photo}"""
 
