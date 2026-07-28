@@ -11,18 +11,23 @@ import numpy as np
 from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
 import streamlit as st
+from PIL import Image
 
 
 
 #==============ForntEnd==============
-st.title("AI Resume Generator")
+st.title("AI Resume Maker & Job Apply Link")
+st.image("airesumeagent.jpeg")
 
 GOOGLE_API_KEY =st.sidebar.text_input("Google API Key",type='password')
 GROQ_API_KEY =st.sidebar.text_input("GROQ API Key",type='password')
 TAVILY_API_KEY =st.sidebar.text_input("TAVILY API Key",type='password')
 
-if not GOOGLE_API_KEY:
-    st.warning("Provide Google API Key")
+if not (GOOGLE_API_KEY) and not (GROQ)_API_KEY) and not (TAVILY_API_KEY) :
+    st.sidebar.warning("pass api keys")
+    st.stop
+else:
+    st.success("Api Keys Loaded")
 
 #==============MODEL AND AGENT CODE==============
 # tool 1
@@ -87,7 +92,30 @@ System instructions: Only Give HTML code as output use dark green text and dark 
 Use myimage.jpeg as image"""
 
 final_prompt = prompt + prompt_reader()
+#===============================upload_image=========================
+FILE = st.sidebar.file_uploader(
+    "choose an image file",
+    type= ["jpg","jpeg","png","webp"]
+)
 
+if FILE is not None:
+try:
+        image = Image.open(FILE)
+        st.sidebar.image(image,caption = "Uploaded Image",use_container_width=True)
+        if image.mode in ("RGBA","P"):
+            image = image.convert("RGB")
+            
+        base_name  = os.path.splitext(FILE.name)[0]
+        save_path = f"{base_name}.jpg"
+        
+        image.save(save_path,"JPEG")
+        st.sidebar.success(f"Image successfully saved as `{save_path}`!")
+
+except Exception as e:
+         st.error(f"Error proccessing image:{e}")
+
+
+            
 # Change this when required new resume by user, pass details
 
 user_info = st.text_input("Give Your Information : ")
