@@ -99,7 +99,7 @@ FILE = st.sidebar.file_uploader(
 )
 
 if FILE is not None:
-try:
+    try:
         image = Image.open(FILE)
         st.sidebar.image(image,caption = "Uploaded Image",use_container_width=True)
         if image.mode in ("RGBA","P"):
@@ -111,7 +111,7 @@ try:
         image.save(save_path,"JPEG")
         st.sidebar.success(f"Image successfully saved as `{save_path}`!")
 
-except Exception as e:
+    except Exception as e:
          st.error(f"Error proccessing image:{e}")
 
 
