@@ -13,7 +13,7 @@ from langchain.agents import create_agent
 import streamlit as st
 from PIL import Image
 import base64
-
+st.set_page_config(layout="wide")
 
 #==============ForntEnd==============
 st.title("AI Resume Maker & Job Apply Link")
